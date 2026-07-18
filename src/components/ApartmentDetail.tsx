@@ -60,7 +60,7 @@ export function ApartmentDetail({ apartment, onClose }: ApartmentDetailProps) {
   return (
     <article className="detail-view" aria-labelledby="apartment-detail-title">
       <div className="detail-toolbar">
-        <button className="back-button" onClick={onClose} type="button" aria-label="상세 닫기">
+        <button autoFocus className="back-button" onClick={onClose} type="button" aria-label="상세 닫기">
           <Icon name="close" size={19} />
           <span>Top 5로 돌아가기</span>
         </button>

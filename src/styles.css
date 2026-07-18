@@ -25,6 +25,7 @@ body,
 #root {
   width: 100%;
   height: 100%;
+  height: 100dvh;
   margin: 0;
 }
 
@@ -36,6 +37,7 @@ body {
 button,
 a {
   font: inherit;
+  touch-action: manipulation;
 }
 
 button {
@@ -52,6 +54,7 @@ a:focus-visible {
   position: relative;
   width: 100%;
   height: 100%;
+  height: 100dvh;
   overflow: hidden;
   background: #dce5df;
 }
@@ -336,10 +339,13 @@ a:focus-visible {
 .shortlist-view {
   display: flex;
   height: 100%;
+  min-height: 0;
   flex-direction: column;
   overflow-y: auto;
+  overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: #c8ccc6 transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
 .site-header {
@@ -695,6 +701,7 @@ a:focus-visible {
 .detail-view {
   display: flex;
   height: 100%;
+  min-height: 0;
   flex-direction: column;
   background: var(--cream);
 }
@@ -742,11 +749,13 @@ a:focus-visible {
 
 .detail-scroll {
   flex: 1;
+  min-height: 0;
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: #c3c9c4 transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
 .detail-hero {
@@ -1481,41 +1490,32 @@ a:focus-visible {
     bottom: 0;
     left: 0;
     width: auto;
-    max-height: 57svh;
+    height: 57vh;
+    height: 57svh;
+    height: 57dvh;
+    max-height: none;
     border-right: 0;
     border-bottom: 0;
     border-left: 0;
     border-radius: 22px 22px 0 0;
     box-shadow: 0 -15px 44px rgba(25, 52, 43, 0.18);
-    transition: max-height 220ms ease;
+    transition: height 220ms ease;
   }
 
   .has-selection .candidate-panel {
-    max-height: 78svh;
+    height: 78vh;
+    height: 78svh;
+    height: 78dvh;
   }
 
   .sheet-handle {
-    position: absolute;
-    z-index: 20;
-    top: 0;
-    left: 0;
-    display: grid;
-    width: 100%;
-    height: 18px;
-    place-items: center;
-    pointer-events: none;
-  }
-
-  .sheet-handle span {
-    display: block;
-    width: 35px;
-    height: 4px;
-    border-radius: 100px;
-    background: #c3c6c1;
+    display: none;
   }
 
   .site-header {
     padding: 24px 20px 13px;
+    padding-right: max(20px, env(safe-area-inset-right));
+    padding-left: max(20px, env(safe-area-inset-left));
   }
 
   .brand-mark {
@@ -1544,6 +1544,7 @@ a:focus-visible {
 
   .shortlist {
     padding: 14px 13px 18px;
+    padding: 14px max(13px, env(safe-area-inset-right)) calc(18px + env(safe-area-inset-bottom)) max(13px, env(safe-area-inset-left));
   }
 
   .section-title-row {
@@ -1570,6 +1571,7 @@ a:focus-visible {
   .map-caption {
     top: max(16px, env(safe-area-inset-top));
     left: 14px;
+    left: max(14px, env(safe-area-inset-left));
     max-width: calc(100% - 84px);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1578,13 +1580,13 @@ a:focus-visible {
 
   .leaflet-control-zoom {
     margin-top: max(16px, env(safe-area-inset-top)) !important;
-    margin-right: 14px !important;
+    margin-right: max(14px, env(safe-area-inset-right)) !important;
   }
 
   .leaflet-control-zoom a {
-    width: 36px !important;
-    height: 36px !important;
-    line-height: 35px !important;
+    width: 44px !important;
+    height: 44px !important;
+    line-height: 43px !important;
   }
 
   .apartment-name-label {
@@ -1597,11 +1599,16 @@ a:focus-visible {
   }
 
   .leaflet-bottom {
+    bottom: 57vh;
     bottom: 57svh;
+    bottom: 57dvh;
+    transition: bottom 220ms ease;
   }
 
   .has-selection .leaflet-bottom {
+    bottom: 78vh;
     bottom: 78svh;
+    bottom: 78dvh;
   }
 
   .map-warning {
@@ -1616,9 +1623,14 @@ a:focus-visible {
   }
 
   .detail-toolbar {
-    height: 50px;
-    flex: 0 0 50px;
-    padding-top: 7px;
+    height: 56px;
+    flex: 0 0 56px;
+    padding-right: max(20px, env(safe-area-inset-right));
+    padding-left: max(20px, env(safe-area-inset-left));
+  }
+
+  .back-button {
+    min-height: 44px;
   }
 
   .detail-hero {
@@ -1626,9 +1638,19 @@ a:focus-visible {
   }
 
   .detail-content {
-    padding-right: 20px;
+    padding-right: max(20px, env(safe-area-inset-right));
     padding-bottom: calc(30px + env(safe-area-inset-bottom));
-    padding-left: 20px;
+    padding-left: max(20px, env(safe-area-inset-left));
+  }
+
+  .thumbnail-strip {
+    padding-right: max(14px, env(safe-area-inset-right));
+    padding-left: max(14px, env(safe-area-inset-left));
+  }
+
+  .thumbnail-button,
+  .external-links a {
+    min-height: 44px;
   }
 
   .detail-heading h2 {
@@ -1638,19 +1660,27 @@ a:focus-visible {
 
 @media (max-width: 420px) {
   .candidate-panel {
-    max-height: 60svh;
+    height: 60vh;
+    height: 60svh;
+    height: 60dvh;
   }
 
   .has-selection .candidate-panel {
-    max-height: 82svh;
+    height: 82vh;
+    height: 82svh;
+    height: 82dvh;
   }
 
   .leaflet-bottom {
+    bottom: 60vh;
     bottom: 60svh;
+    bottom: 60dvh;
   }
 
   .has-selection .leaflet-bottom {
+    bottom: 82vh;
     bottom: 82svh;
+    bottom: 82dvh;
   }
 
   .search-summary span:last-child {

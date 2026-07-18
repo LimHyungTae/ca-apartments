@@ -70,6 +70,11 @@ export function mapApartmentLabel(apartment: Apartment) {
   return unitNumber ? `${apartment.name} · #${unitNumber}` : apartment.name
 }
 
+export function mobileMapHorizontalPadding(viewportWidth: number) {
+  const safeWidth = Number.isFinite(viewportWidth) ? Math.max(0, viewportWidth) : 0
+  return Math.max(44, Math.min(64, Math.round(safeWidth * 0.14)))
+}
+
 export function propertyTypeLabel(type?: string) {
   const labels: Record<string, string> = {
     apartment: '아파트',

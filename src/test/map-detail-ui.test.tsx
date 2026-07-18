@@ -8,6 +8,7 @@ import {
   buildMarkerPlacements,
   floorLabel,
   mapApartmentLabel,
+  mobileMapHorizontalPadding,
   propertyTypeLabel,
 } from '../components/formatters'
 import type { Apartment } from '../data/apartments'
@@ -80,6 +81,12 @@ describe('map display helpers', () => {
 
     expect(placements.west.labelDirection).toBe('right')
     expect(placements.east.labelDirection).toBe('left')
+  })
+
+  it('keeps mobile map padding useful without squeezing narrow screens', () => {
+    expect(mobileMapHorizontalPadding(320)).toBe(45)
+    expect(mobileMapHorizontalPadding(390)).toBe(55)
+    expect(mobileMapHorizontalPadding(800)).toBe(64)
   })
 
   it('formats building and explicit boolean values for Korean display', () => {

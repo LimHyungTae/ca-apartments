@@ -3,7 +3,12 @@ import L from 'leaflet'
 import { MapContainer, Marker, TileLayer, Tooltip, ZoomControl, useMap } from 'react-leaflet'
 import type { Apartment } from '../data/apartments'
 import { Icon } from './Icons'
-import { buildMarkerPlacements, mapApartmentLabel, type MarkerPlacement } from './formatters'
+import {
+  buildMarkerPlacements,
+  mapApartmentLabel,
+  mobileMapHorizontalPadding,
+  type MarkerPlacement,
+} from './formatters'
 
 const BAY_AREA_CENTER: [number, number] = [37.5626, -122.305]
 
@@ -87,12 +92,35 @@ function MapViewport({
   selectedSlug,
 }: Pick<ApartmentMapProps, 'apartments' | 'selectedSlug'> & { placements: Record<string, MarkerPlacement> }) {
   const map = useMap()
+  const [viewportRevision, setViewportRevision] = useState(0)
   const coordinateKey = apartments.map((item) => placements[item.slug].position.join(',')).join('|')
   const selected = apartments.find((item) => item.slug === selectedSlug)
 
   useEffect(() => {
     const timer = window.setTimeout(() => map.invalidateSize(), 0)
     return () => window.clearTimeout(timer)
+  }, [map])
+
+  useEffect(() => {
+    let resizeTimer: number | undefined
+    const refreshViewport = () => {
+      window.clearTimeout(resizeTimer)
+      resizeTimer = window.setTimeout(() => {
+        map.invalidateSize({ pan: false })
+        setViewportRevision((revision) => revision + 1)
+      }, 120)
+    }
+
+    window.addEventListener('resize', refreshViewport)
+    window.addEventListener('orientationchange', refreshViewport)
+    window.visualViewport?.addEventListener('resize', refreshViewport)
+
+    return () => {
+      window.clearTimeout(resizeTimer)
+      window.removeEventListener('resize', refreshViewport)
+      window.removeEventListener('orientationchange', refreshViewport)
+      window.visualViewport?.removeEventListener('resize', refreshViewport)
+    }
   }, [map])
 
   useEffect(() => {
@@ -126,17 +154,19 @@ function MapViewport({
     }
 
     const isDesktop = typeof window !== 'undefined' && window.matchMedia?.('(min-width: 801px)').matches
-    const mapHeight = map.getSize().y || window.innerHeight
+    const mapSize = map.getSize()
+    const mapHeight = mapSize.y || window.innerHeight
     const panelRatio = window.innerWidth <= 420 ? 0.6 : 0.57
+    const mobileXPadding = mobileMapHorizontalPadding(mapSize.x || window.innerWidth)
     const bounds = L.latLngBounds(apartments.map((item) => placements[item.slug].position))
     map.fitBounds(bounds, {
       maxZoom: 14,
-      paddingTopLeft: isDesktop ? [470, 90] : [160, 86],
+      paddingTopLeft: isDesktop ? [470, 90] : [mobileXPadding, 86],
       paddingBottomRight: isDesktop
         ? [230, 70]
-        : [160, Math.round(mapHeight * panelRatio + 28)],
+        : [mobileXPadding, Math.round(mapHeight * panelRatio + 28)],
     })
-  }, [apartments, coordinateKey, map, placements, selected])
+  }, [apartments, coordinateKey, map, placements, selected, viewportRevision])
 
   return null
 }
