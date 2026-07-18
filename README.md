@@ -150,7 +150,7 @@ npm run generate
 
 동기화 명령은 `published: true`인 후보만 처리합니다. JPG, PNG, HEIC, TIFF, AVIF, WebP 등의 사진을 EXIF 방향에 맞게 자동 회전하고 메타데이터를 제거한 뒤 최대 폭 640px/1600px WebP 두 장으로 만듭니다. 결과는 `public/media/<slug>/`에 저장되고, 원본에서 사라진 사진의 기존 WebP도 정리됩니다. 영상과 원본 사진은 복사하거나 GitHub에 올리지 않습니다.
 
-Dropbox에서는 아파트별 폴더에 **보기 전용 링크**를 만든 뒤 `links.dropboxFolder`에 넣으세요. 사이트의 “Dropbox에서 전체 보기” 버튼으로 원본 사진과 영상을 확인할 수 있습니다. 링크 권한은 Dropbox에서 직접 확인해야 합니다.
+Dropbox에서는 아파트별 폴더에 **보기 전용 링크**를 만든 뒤 `links.dropboxFolder`에 넣으세요. 상세 화면 상단의 “사진 · 영상 전체 폴더 보기” 버튼으로 원본 사진과 영상을 확인할 수 있습니다. 링크 권한은 Dropbox에서 직접 확인해야 합니다.
 
 ## 배포와 공개 범위
 

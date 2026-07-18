@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+  apartments,
   calculateMonthlyTotal,
   getTopApartments,
   type Apartment,
@@ -72,6 +73,22 @@ describe('apartment helpers', () => {
     expect(source.map((item) => item.rank)).toEqual([3, 1, 2, 4, 6, 5])
     expect(getTopApartments(source, 0)).toEqual([])
     expect(() => getTopApartments(source, -1)).toThrow(RangeError)
+  })
+
+  it('publishes the correct Dropbox folder for every Top 5 candidate', () => {
+    expect(
+      getTopApartments(apartments).map((apartment) => [
+        apartment.rank,
+        apartment.slug,
+        apartment.links?.dropboxFolder,
+      ]),
+    ).toEqual([
+      [1, 'park-place-at-san-mateo', 'https://www.dropbox.com/scl/fo/p8qz6rdiraxuhqiz4tzhc/AG4_VcnZcftmMA-rEcgeXsM?rlkey=xjcsiero22cvmitl6hgptryqo&dl=0'],
+      [2, '1107-palm-ave-b', 'https://www.dropbox.com/scl/fo/pyzxzptfotl1gzp7lyrhq/ADlKxMvPCuCpNO8Da13cHrs?rlkey=5teo5jiy5ke21v8jjhpyjodae&dl=0'],
+      [3, 'the-plaza', 'https://www.dropbox.com/scl/fo/lb0wk734yz5esnctdgvj9/AAjL2niO3TJN5WtlJvmeEt4?rlkey=6very1qho9dnlfcxe7h0w3zdi&dl=0'],
+      [4, 'one-hundred-grand', 'https://www.dropbox.com/scl/fo/vza4nvtol08kar1yo9190/AObYGyktYJP-L3lWPtW06Bg?rlkey=hme2brbiynvswpjb1cdm3dw0o&dl=0'],
+      [5, '46-barneson-ave-apt-1', 'https://www.dropbox.com/scl/fo/0r23zrk7r21d218i173x3/AEOMo7KUegmu8G1JJ00waVw?rlkey=ry4qba3u145ndo2y2232h70ig&dl=0'],
+    ])
   })
 })
 

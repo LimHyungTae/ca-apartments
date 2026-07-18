@@ -841,6 +841,66 @@ a:focus-visible {
   object-fit: cover;
 }
 
+.dropbox-cta-wrap {
+  padding: 12px 14px 0;
+  background: var(--cream);
+}
+
+.dropbox-cta {
+  display: grid;
+  min-height: 64px;
+  grid-template-columns: 40px minmax(0, 1fr) 18px;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 14px;
+  border-radius: 14px;
+  color: white;
+  text-decoration: none;
+  background: linear-gradient(135deg, #0061ff, #0056dc);
+  box-shadow: 0 9px 24px rgba(0, 97, 255, 0.24);
+  transition: box-shadow 160ms ease, transform 160ms ease;
+}
+
+.dropbox-cta:hover {
+  box-shadow: 0 12px 28px rgba(0, 82, 218, 0.3);
+  transform: translateY(-1px);
+}
+
+.dropbox-cta-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.dropbox-cta-copy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.dropbox-cta-copy small {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.dropbox-cta-copy strong {
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropbox-cta-arrow {
+  opacity: 0.82;
+}
+
 .detail-content {
   padding: 19px 23px 30px;
 }
@@ -1450,12 +1510,6 @@ a:focus-visible {
   background: white;
 }
 
-.external-links a.primary-link {
-  border-color: var(--green);
-  color: white;
-  background: var(--green);
-}
-
 @media (max-height: 760px) and (min-width: 801px) {
   .site-header {
     padding-top: 21px;
@@ -1644,6 +1698,11 @@ a:focus-visible {
   }
 
   .thumbnail-strip {
+    padding-right: max(14px, env(safe-area-inset-right));
+    padding-left: max(14px, env(safe-area-inset-left));
+  }
+
+  .dropbox-cta-wrap {
     padding-right: max(14px, env(safe-area-inset-right));
     padding-left: max(14px, env(safe-area-inset-left));
   }

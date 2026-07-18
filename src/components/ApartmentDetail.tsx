@@ -95,6 +95,8 @@ export function ApartmentDetail({ apartment, onClose }: ApartmentDetailProps) {
           </div>
         ) : null}
 
+        <DropboxFolderLink href={apartment.links?.dropboxFolder} />
+
         <div className="detail-content">
           <header className="detail-heading">
             <div>
@@ -338,20 +340,42 @@ function NoteList({ icon, items, label, tone }: { icon: 'check' | 'minus'; items
 
 function ExternalLinks({ apartment }: { apartment: Apartment }) {
   const links = [
-    { href: apartment.links?.dropboxFolder, label: '사진 · 영상 전체 보기', primary: true },
     { href: apartment.links?.listing, label: '매물 페이지' },
     { href: apartment.links?.official, label: '공식 홈페이지' },
-  ].filter((link): link is { href: string; label: string; primary?: boolean } => Boolean(link.href))
+  ].filter((link): link is { href: string; label: string } => Boolean(link.href))
 
   if (!links.length) return null
 
   return (
     <nav className="external-links" aria-label="외부 링크">
       {links.map((link) => (
-        <a className={link.primary ? 'primary-link' : ''} href={link.href} key={link.label} rel="noopener noreferrer" target="_blank">
+        <a href={link.href} key={link.label} rel="noopener noreferrer" target="_blank">
           <span>{link.label}</span><Icon name="external" size={17} />
         </a>
       ))}
     </nav>
+  )
+}
+
+function DropboxFolderLink({ href }: { href?: string }) {
+  if (!href) return null
+
+  return (
+    <div className="dropbox-cta-wrap">
+      <a
+        aria-label="Dropbox에서 사진과 영상 전체 폴더 열기 (새 탭)"
+        className="dropbox-cta"
+        href={href}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <span className="dropbox-cta-icon"><Icon name="image" size={21} /></span>
+        <span className="dropbox-cta-copy">
+          <small>DROPBOX FOLDER</small>
+          <strong>사진 · 영상 전체 폴더 보기</strong>
+        </span>
+        <Icon className="dropbox-cta-arrow" name="external" size={18} />
+      </a>
+    </div>
   )
 }

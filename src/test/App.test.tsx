@@ -104,14 +104,15 @@ describe('App', () => {
 
     expect(screen.getByRole('heading', { name: 'Alpha Home' })).toBeInTheDocument()
     expect(screen.getByLabelText('월 예상 비용')).toHaveTextContent('$3,851')
-    expect(screen.getByRole('link', { name: /사진 · 영상 전체 보기/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /Dropbox에서 사진과 영상 전체 폴더 열기/ })).toHaveAttribute(
       'href',
       'https://www.dropbox.com/scl/fo/alpha-home',
     )
-    expect(screen.getByRole('link', { name: /사진 · 영상 전체 보기/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /Dropbox에서 사진과 영상 전체 폴더 열기/ })).toHaveAttribute(
       'target',
       '_blank',
     )
+    expect(screen.getAllByRole('link', { name: /Dropbox/ })).toHaveLength(1)
 
     fireEvent.click(screen.getByRole('button', { name: '상세 닫기' }))
 

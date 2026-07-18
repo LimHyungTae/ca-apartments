@@ -114,8 +114,13 @@ describe('apartment detail', () => {
     expect(screen.getByText('산책로가 바로 연결됨')).toBeInTheDocument()
     expect(screen.getByText('세탁기·건조기 유닛 내부')).toBeInTheDocument()
 
-    const dropboxLink = screen.getByRole('link', { name: /사진 · 영상 전체 보기/ })
+    const dropboxLink = screen.getByRole('link', { name: /Dropbox에서 사진과 영상 전체 폴더 열기/ })
     expect(dropboxLink).toHaveAttribute('href', 'https://www.dropbox.com/scl/fo/example?dl=0')
+    expect(dropboxLink).toHaveAttribute('target', '_blank')
+    expect(screen.getAllByRole('link', { name: /Dropbox/ })).toHaveLength(1)
+    expect(dropboxLink.compareDocumentPosition(screen.getByLabelText('월 예상 비용'))).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    )
 
     fireEvent.click(screen.getByRole('button', { name: '상세 닫기' }))
     expect(onClose).toHaveBeenCalledOnce()
