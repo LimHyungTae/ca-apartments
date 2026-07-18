@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.vite/
+coverage/
+src/generated/*
+!src/generated/.gitkeep
+media.config.local.json
+.DS_Store
+*.log
+*.tsbuildinfo

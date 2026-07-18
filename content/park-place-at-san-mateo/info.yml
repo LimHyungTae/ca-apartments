@@ -1,0 +1,77 @@
+# 비어 있는 값은 그대로 두어도 draft 검증을 통과합니다.
+# 공개 전에 필수 정보를 채우고 마지막에 published를 true로 바꾸세요.
+published: false
+slug: park-place-at-san-mateo
+name: Park Place at San Mateo Apartments
+sourceFolder: Park Place at San Mateo Apartments
+rank:
+status: visited
+
+location:
+  address:
+  area:
+  lat:
+  lng:
+
+visitDate:
+
+unit:
+  number:
+  beds:
+  baths:
+  sqft:
+  floor:
+  availableDate:
+
+building:
+  # apartment | condo | townhouse | house | other
+  propertyType:
+  yearBuilt:
+  totalFloors:
+
+access:
+  entryStairs:
+  internalStairs:
+  elevator:
+  stepFreeEntry:
+  notes:
+
+lease:
+  termMonths:
+  notes:
+
+parking:
+  type:
+  spaces:
+  notes:
+
+costs:
+  rent:
+  recurringFees:
+  parking:
+  utilitiesEstimate:
+  deposit:
+  promotion:
+
+commutes: []
+surroundings: []
+amenities: []
+features: []
+pros: []
+cons: []
+notes:
+
+scores:
+  location:
+  value:
+  unit:
+  amenities:
+  commute:
+  overall:
+
+links:
+  official:
+  listing:
+  dropboxFolder:
+
+lastVerified:
