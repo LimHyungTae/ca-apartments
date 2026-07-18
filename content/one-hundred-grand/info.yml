@@ -1,0 +1,97 @@
+published: true
+slug: one-hundred-grand
+name: One Hundred Grand
+sourceFolder: One Hundred Grand
+rank: 4
+status: visited
+
+location:
+  address: 100 Grand Ln, Foster City, CA 94404
+  area: Pilgrim-Triton, Foster City
+  lat: 37.5627377
+  lng: -122.2693758
+
+visitDate: 2026-07-16
+
+unit:
+  number: "406 / 410"
+  beds: 2
+  baths: 2
+  sqft: 1138
+  floor: 4
+  availableDate: 2026-07-17
+
+building:
+  propertyType: apartment
+  yearBuilt: 2015
+  totalFloors: 5
+
+access:
+  entryStairs:
+  internalStairs:
+  elevator: true
+  stepFreeEntry:
+  notes: 엘리베이터 이용 가능
+
+lease:
+  termMonths:
+  notes: 406호와 410호 확인 당시 가격 기준
+
+parking:
+  type: 무료 주차
+  spaces:
+  notes: 주차비는 무료이며 배정 방식과 가능 대수는 최종 확인 필요
+
+costs:
+  rent: 5439
+  recurringFees:
+  parking: 0
+  utilitiesEstimate:
+  deposit:
+  promotion:
+
+commutes: []
+surroundings:
+  - 주변 쇼핑시설과 식당을 걸어서 이용하기 편리함
+  - Foster City의 공원과 Bay Trail을 이용하기 좋음
+amenities:
+  - 리조트형 수영장과 스파
+  - 피트니스 센터와 요가·TRX 스튜디오
+  - 클럽룸과 공용 업무 공간
+  - 전기차 충전소
+  - Caltrain 셔틀
+features:
+  - 406호와 410호는 나란히 있는 4층 남향 유닛
+  - 창이 매우 크고 하늘이 탁 트여 있음
+  - Plan 2A, 2베드·2배스 구조
+  - 유닛 내 세탁기·건조기
+  - 중앙 에어컨
+  - 석영 상판과 가스레인지
+pros:
+  - 남쪽 방향의 큰 창과 탁 트인 하늘이 인상적임
+  - 406호와 410호 모두 같은 방향의 좋은 뷰를 가짐
+  - 주차비가 무료
+cons:
+  - 창밖 전면에 주유소와 공사장이 보임
+  - 침실 바닥이 카펫
+  - 현재 월 렌트가 $5,439로 인상됨
+notes: |
+  406호와 410호는 나란한 유닛이며 둘 다 4층 남향 뷰 후보임.
+  공개 매물의 base rent는 조회 시점에 $5,267이었고, 직접 확인한 현재 견적은 $5,439임.
+  공식 Virtual Tours 페이지에서 Plan 2A를 눌러 큰 창과 구조를 다시 확인할 수 있음.
+  공식 웹사이트의 가격과 재고는 수시로 변동될 수 있음.
+
+scores:
+  location:
+  value:
+  unit:
+  amenities:
+  commute:
+  overall:
+
+links:
+  official: https://www.essexapartmenthomes.com/apartments/foster-city/one-hundred-grand
+  listing: https://www.essexapartmenthomes.com/apartments/foster-city/one-hundred-grand/virtual-tours
+  dropboxFolder:
+
+lastVerified: 2026-07-17

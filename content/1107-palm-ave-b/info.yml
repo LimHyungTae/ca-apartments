@@ -1,0 +1,92 @@
+published: true
+slug: 1107-palm-ave-b
+name: 1107 Palm Ave
+sourceFolder: 1107 Palm Ave
+rank: 2
+status: visited
+
+location:
+  address: "1107 Palm Ave #B, San Mateo, CA 94401"
+  area: Hayward Park, San Mateo
+  lat: 37.55778
+  lng: -122.31702
+
+visitDate: 2026-07-17
+
+unit:
+  number: B
+  beds: 2
+  baths: 2
+  sqft: 1800
+  floor: 2
+  availableDate: 2026-07-17
+
+building:
+  propertyType: apartment
+  yearBuilt: 1924
+  totalFloors: 2
+
+access:
+  entryStairs: true
+  internalStairs:
+  elevator: false
+  stepFreeEntry: false
+  notes: 2층 현관까지 계단이 있어 유모차를 들고 오르내릴 수 있는지 확인 필요
+
+lease:
+  termMonths: 6
+  notes: Zillow 게시물 기준이며 물·가스·전기·쓰레기 요금은 세입자 부담
+
+parking:
+  type: 주차 조건 확인 필요
+  spaces:
+  notes: 무료 주차로 보이지만 집주인에게 제공 여부와 비용을 최종 확인해야 함
+
+costs:
+  rent: 5000
+  recurringFees:
+  parking:
+  utilitiesEstimate:
+  deposit:
+  promotion:
+
+commutes: []
+surroundings:
+  - 깨끗하고 안전하다고 느낀 주택가
+  - 설아와 밖에서 산책하기 좋아 보임
+  - Central Park, Downtown San Mateo, Caltrain을 걸어서 이용하기 좋은 입지
+amenities:
+  - 수영장과 스파
+features:
+  - 집주인은 1층에 거주하고 후보 유닛은 2층에 있는 형태
+  - 2층 독립 유닛과 전용 출입구
+  - 동·서 양쪽을 포함해 여러 방향으로 창문이 나 있음
+  - 발코니 2곳
+  - 유닛 내 세탁기·건조기
+  - 벽난로
+pros:
+  - The Plaza와 One Hundred Grand보다 가격이 저렴하면서 약 750 sqft 더 넓음
+  - 입지가 매우 좋고 동네가 깨끗하고 안전해 산책하기 좋아 보임
+  - 여러 방향의 창문 덕분에 채광과 환기가 좋아 보임
+  - 2층이라 벌레에 상대적으로 덜 취약할 것으로 기대됨
+cons:
+  - 계단이 있어 유모차를 들고 오르내리기에는 부담이 될 수 있음
+notes: |
+  외부는 7월 16일, 내부는 7월 17일에 확인함.
+  Foster's Landing보다 계단이 푹신하고 부담이 덜했으며 실내에서는 신발을 벗고 생활함.
+  The Plaza와 One Hundred Grand도 무료 주차이며, 이 유닛도 무료로 보이나 최종 확인이 필요함.
+
+scores:
+  location:
+  value:
+  unit:
+  amenities:
+  commute:
+  overall:
+
+links:
+  official:
+  listing: https://www.zillow.com/homedetails/1107-Palm-Ave-B-San-Mateo-CA-94401/2069150950_zpid/
+  dropboxFolder: https://www.dropbox.com/scl/fi/8f82u4ko9sl326ry0hqog/20260716_124553.mp4?rlkey=8x98yxgwlt8b1r4b6g44h5dsm&dl=0
+
+lastVerified: 2026-07-17

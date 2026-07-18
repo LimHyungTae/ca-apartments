@@ -71,29 +71,33 @@ beforeEach(() => {
     apartmentRecords.length,
     apartmentFixture(3, 'Charlie Home'),
     apartmentFixture(1, 'Alpha Home'),
+    apartmentFixture(6, 'Foxtrot Home'),
     apartmentFixture(4, 'Delta Home'),
     apartmentFixture(2, 'Bravo Home'),
+    apartmentFixture(5, 'Echo Home'),
   )
 })
 
 describe('App', () => {
-  it('shows the three best-ranked homes in rank order', () => {
+  it('shows the five best-ranked homes in rank order', () => {
     render(<App />)
 
     const panel = within(screen.getByLabelText('아파트 후보 정보'))
-    expect(panel.getByRole('heading', { name: 'Top 3' })).toBeInTheDocument()
-    expect(panel.getByText('3 / 4')).toBeInTheDocument()
+    expect(panel.getByRole('heading', { name: 'Top 5 Candidates' })).toBeInTheDocument()
+    expect(panel.getByText('5 / 6')).toBeInTheDocument()
 
     const cards = panel.getAllByRole('button', { name: /상세 보기$/ })
     expect(cards.map((card) => card.getAttribute('aria-label'))).toEqual([
       'Alpha Home 상세 보기',
       'Bravo Home 상세 보기',
       'Charlie Home 상세 보기',
+      'Delta Home 상세 보기',
+      'Echo Home 상세 보기',
     ])
-    expect(panel.queryByRole('button', { name: 'Delta Home 상세 보기' })).not.toBeInTheDocument()
+    expect(panel.queryByRole('button', { name: 'Foxtrot Home 상세 보기' })).not.toBeInTheDocument()
   })
 
-  it('opens a card detail, exposes the Dropbox link, and returns to Top 3', () => {
+  it('opens a card detail, exposes the Dropbox link, and returns to Top 5', () => {
     render(<App />)
 
     fireEvent.click(screen.getByRole('button', { name: 'Alpha Home 상세 보기' }))
@@ -111,18 +115,18 @@ describe('App', () => {
 
     fireEvent.click(screen.getByRole('button', { name: '상세 닫기' }))
 
-    expect(screen.getByRole('heading', { name: 'Top 3' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Top 5 Candidates' })).toBeInTheDocument()
   })
 
-  it('opens any public candidate selected from the map, including homes outside Top 3', () => {
+  it('opens any public candidate selected from the map, including homes outside Top 5', () => {
     render(<App />)
 
-    fireEvent.click(screen.getByRole('button', { name: '지도에서 Delta Home 선택' }))
+    fireEvent.click(screen.getByRole('button', { name: '지도에서 Foxtrot Home 선택' }))
 
-    expect(screen.getByRole('heading', { name: 'Delta Home' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Foxtrot Home' })).toBeInTheDocument()
     expect(screen.getByLabelText('아파트 후보 지도')).toHaveAttribute(
       'data-selected-slug',
-      'delta-home',
+      'foxtrot-home',
     )
   })
 

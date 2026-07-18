@@ -1,6 +1,6 @@
 # CA Apartments
 
-San Mateo–Hillsdale–Foster City의 아파트 후보를 지도와 Top 3 목록으로 비교하는 가족용 정적 사이트입니다. 후보 정보는 저장소의 YAML로 관리하고, 사진 원본과 영상은 Dropbox에 둡니다. 사이트에는 개인정보가 제거된 WebP 사진 미리보기만 배포합니다.
+San Mateo–Hillsdale–Foster City의 아파트 후보를 지도와 Top 5 목록으로 비교하는 가족용 정적 사이트입니다. 후보 정보는 저장소의 YAML로 관리하고, 사진 원본과 영상은 Dropbox에 둡니다. 사이트에는 개인정보가 제거된 WebP 사진 미리보기만 배포합니다.
 
 ## 로컬 실행
 
@@ -108,7 +108,7 @@ Draft는 빈 값을 허용하므로 정보를 모으는 동안 `published: false
 - `location.address`, `location.lat`, `location.lng`
 - `costs.rent`
 
-공개 후보끼리는 `rank`가 겹칠 수 없고 모든 후보의 `slug`는 고유해야 합니다. Top 3는 `rank`가 작은 순서대로 결정됩니다. 월 예상 총비용은 렌트, 반복 비용, 주차비, 예상 공과금의 합이며 보증금과 프로모션은 별도로 표시됩니다.
+공개 후보끼리는 `rank`가 겹칠 수 없고 모든 후보의 `slug`는 고유해야 합니다. Top 5는 `rank`가 작은 순서대로 결정됩니다. 월 예상 총비용은 렌트, 반복 비용, 주차비, 예상 공과금의 합이며 보증금과 프로모션은 별도로 표시됩니다.
 
 `location.lat`와 `location.lng`에는 Google Maps에서 건물 위치를 우클릭했을 때 나오는 좌표를 순서대로 입력합니다. 첫 번째 숫자가 위도(`lat`), 두 번째 숫자가 경도(`lng`)입니다.
 

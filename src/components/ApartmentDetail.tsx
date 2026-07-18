@@ -62,7 +62,7 @@ export function ApartmentDetail({ apartment, onClose }: ApartmentDetailProps) {
       <div className="detail-toolbar">
         <button className="back-button" onClick={onClose} type="button" aria-label="상세 닫기">
           <Icon name="close" size={19} />
-          <span>Top 3로 돌아가기</span>
+          <span>Top 5로 돌아가기</span>
         </button>
         <span className="detail-rank">NO. {apartment.rank}</span>
       </div>

@@ -12,7 +12,7 @@ export default function App() {
     () => [...apartments].sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name)),
     [],
   )
-  const topThree = sortedApartments.slice(0, 3)
+  const topFive = sortedApartments.slice(0, 5)
   const selectedApartment = sortedApartments.find((apartment) => apartment.slug === selectedSlug)
 
   function selectApartment(apartment: Apartment) {
@@ -51,18 +51,18 @@ export default function App() {
               </div>
             </header>
 
-            <section className="shortlist" aria-labelledby="top-three-title">
+            <section className="shortlist" aria-labelledby="top-five-title">
               <div className="section-title-row">
                 <div>
                   <p>OUR SHORTLIST</p>
-                  <h2 id="top-three-title">Top 3</h2>
+                  <h2 id="top-five-title">Top 5 Candidates</h2>
                 </div>
-                {topThree.length ? <span>{topThree.length} / {sortedApartments.length}</span> : null}
+                {topFive.length ? <span>{topFive.length} / {sortedApartments.length}</span> : null}
               </div>
 
-              {topThree.length ? (
+              {topFive.length ? (
                 <div className="card-list">
-                  {topThree.map((apartment) => (
+                  {topFive.map((apartment) => (
                     <ApartmentCard apartment={apartment} key={apartment.slug} onSelect={selectApartment} />
                   ))}
                 </div>

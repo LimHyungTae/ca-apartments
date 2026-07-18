@@ -31,7 +31,7 @@ export function calculateMonthlyTotal(costs: ApartmentCosts): number {
 
 export function getTopApartments(
   items: readonly Apartment[],
-  limit = 3,
+  limit = 5,
 ): Apartment[] {
   if (!Number.isInteger(limit) || limit < 0) {
     throw new RangeError('limit은 0 이상의 정수여야 합니다.')

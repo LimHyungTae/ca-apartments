@@ -58,16 +58,18 @@ describe('apartment helpers', () => {
     expect(calculateMonthlyTotal({ rent: 3_500 })).toBe(3_500)
   })
 
-  it('returns ranked Top 3 data without mutating the source list', () => {
+  it('returns ranked Top 5 data without mutating the source list', () => {
     const source = [
       apartmentFixture(3, 'Charlie Home'),
       apartmentFixture(1, 'Alpha Home'),
       apartmentFixture(2, 'Bravo Home'),
       apartmentFixture(4, 'Delta Home'),
+      apartmentFixture(6, 'Foxtrot Home'),
+      apartmentFixture(5, 'Echo Home'),
     ]
 
-    expect(getTopApartments(source).map((item) => item.rank)).toEqual([1, 2, 3])
-    expect(source.map((item) => item.rank)).toEqual([3, 1, 2, 4])
+    expect(getTopApartments(source).map((item) => item.rank)).toEqual([1, 2, 3, 4, 5])
+    expect(source.map((item) => item.rank)).toEqual([3, 1, 2, 4, 6, 5])
     expect(getTopApartments(source, 0)).toEqual([])
     expect(() => getTopApartments(source, -1)).toThrow(RangeError)
   })

@@ -1,0 +1,96 @@
+published: true
+slug: the-plaza
+name: The Plaza
+sourceFolder: The plaza
+rank: 3
+status: visited
+
+location:
+  address: 1 Plaza View Ln, Foster City, CA 94404
+  area: Pilgrim-Triton, Foster City
+  lat: 37.5652142
+  lng: -122.2700961
+
+visitDate: 2026-07-16
+
+unit:
+  number: "231"
+  beds: 2
+  baths: 2
+  sqft: 1105
+  floor: 2
+  availableDate: 2026-08-24
+
+building:
+  propertyType: apartment
+  yearBuilt: 2013
+  totalFloors: 5
+
+access:
+  entryStairs:
+  internalStairs:
+  elevator: true
+  stepFreeEntry:
+  notes: 엘리베이터 이용 가능
+
+lease:
+  termMonths:
+  notes: 231호 확인 당시 견적은 $5,139이며 안내된 starting base rent는 $5,119
+
+parking:
+  type: 무료 주차
+  spaces:
+  notes: 주차비는 무료이며 배정 방식과 가능 대수는 최종 확인 필요
+
+costs:
+  rent: 5139
+  recurringFees:
+  parking: 0
+  utilitiesEstimate:
+  deposit:
+  promotion:
+
+commutes: []
+surroundings:
+  - Community Park와 Bay Trail이 가까움
+  - 건물 내 상업시설과 주변 쇼핑시설을 이용하기 편리함
+amenities:
+  - 리조트형 수영장과 스파
+  - 피트니스 센터와 요가 스튜디오
+  - 입주민 라운지와 공용 업무 공간
+  - 택배 보관함
+  - 통제식 출입과 주차장
+features:
+  - Plan 2D, 2베드·2배스 구조
+  - 남쪽에 가까운 코너 유닛 뷰
+  - 거실은 우드 스타일 바닥, 침실은 카펫으로 보이나 실내 미투어라 확인 필요
+  - 유닛 내 세탁기·건조기
+  - 중앙 냉난방
+  - 석영 상판과 가스레인지
+pros:
+  - 231호가 남쪽 코너 쪽에 있어 위치와 뷰가 좋음
+  - 쓰레기 투입실 문이 Windsor처럼 쾅 닫히는 구조가 아니라 소음 우려가 크지 않아 보임
+  - 주차비가 무료
+cons:
+  - 8월 24일부터 입주할 수 있어 입주 가능일이 늦음
+  - 사람이 거주 중이라 231호 실내를 직접 투어하지 못함
+  - 쓰레기 투입실이 바로 옆이라 실제 생활 소음은 확인 필요
+notes: |
+  실제 231호는 사람이 살고 있어 내부를 보지 못했음.
+  쓰레기 투입실이 바로 옆이지만 문이 부드럽게 닫히는 구조라 Windsor보다 소음 가능성이 낮아 보였음.
+  공식 웹사이트의 가격과 재고는 수시로 변동될 수 있음.
+
+scores:
+  location:
+  value:
+  unit:
+  amenities:
+  commute:
+  overall:
+
+links:
+  official: https://www.essexapartmenthomes.com/apartments/foster-city/the-plaza
+  listing: https://www.apartments.com/the-plaza-foster-city-ca/dxwkg9l/
+  dropboxFolder: https://www.dropbox.com/scl/fo/lb0wk734yz5esnctdgvj9/AAjL2niO3TJN5WtlJvmeEt4?rlkey=6very1qho9dnlfcxe7h0w3zdi&dl=0
+
+lastVerified: 2026-07-17
