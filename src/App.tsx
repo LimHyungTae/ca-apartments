@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { apartments } from './data/apartments'
 import type { Apartment } from './data/apartments'
 import { ApartmentCard } from './components/ApartmentCard'
@@ -6,17 +6,95 @@ import { ApartmentDetail } from './components/ApartmentDetail'
 import { ApartmentMap } from './components/ApartmentMap'
 import { Icon } from './components/Icons'
 
+const apartmentQueryParameter = 'apartment'
+const apartmentHistoryStateKey = '__caApartmentsDetail'
+
+function historyStateRecord(): Record<string, unknown> {
+  const state: unknown = window.history.state
+  return state && typeof state === 'object' && !Array.isArray(state)
+    ? state as Record<string, unknown>
+    : {}
+}
+
+function historyStateWithApartment(slug: string): Record<string, unknown> {
+  return {
+    ...historyStateRecord(),
+    [apartmentHistoryStateKey]: slug,
+  }
+}
+
+function historyStateWithoutApartment(): Record<string, unknown> {
+  const {
+    [apartmentHistoryStateKey]: _apartmentDetail,
+    ...remainingState
+  } = historyStateRecord()
+  return remainingState
+}
+
+function apartmentUrl(slug?: string): string {
+  const url = new URL(window.location.href)
+  if (slug) {
+    url.searchParams.set(apartmentQueryParameter, slug)
+  } else {
+    url.searchParams.delete(apartmentQueryParameter)
+  }
+  return `${url.pathname}${url.search}${url.hash}`
+}
+
+function apartmentSlugFromUrl(validSlugs: Set<string>): string | undefined {
+  const slug = new URL(window.location.href).searchParams.get(apartmentQueryParameter)
+  return slug && validSlugs.has(slug) ? slug : undefined
+}
+
 export default function App() {
-  const [selectedSlug, setSelectedSlug] = useState<string>()
   const sortedApartments = useMemo(
     () => [...apartments].sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name)),
     [],
   )
+  const validSlugs = useMemo(
+    () => new Set(sortedApartments.map((apartment) => apartment.slug)),
+    [sortedApartments],
+  )
+  const [selectedSlug, setSelectedSlug] = useState<string | undefined>(() =>
+    apartmentSlugFromUrl(validSlugs),
+  )
+  const closeNavigationPending = useRef(false)
   const topFive = sortedApartments.slice(0, 5)
   const selectedApartment = sortedApartments.find((apartment) => apartment.slug === selectedSlug)
 
+  useEffect(() => {
+    function handlePopState() {
+      closeNavigationPending.current = false
+      setSelectedSlug(apartmentSlugFromUrl(validSlugs))
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [validSlugs])
+
   function selectApartment(apartment: Apartment) {
+    if (apartment.slug === selectedSlug) return
+
+    const method = selectedApartment ? 'replaceState' : 'pushState'
+    window.history[method](
+      historyStateWithApartment(apartment.slug),
+      '',
+      apartmentUrl(apartment.slug),
+    )
     setSelectedSlug(apartment.slug)
+  }
+
+  function closeApartment() {
+    if (!selectedApartment || closeNavigationPending.current) return
+
+    if (historyStateRecord()[apartmentHistoryStateKey] === selectedApartment.slug) {
+      closeNavigationPending.current = true
+      window.history.back()
+      return
+    }
+
+    window.history.replaceState(historyStateWithoutApartment(), '', apartmentUrl())
+    setSelectedSlug(undefined)
   }
 
   return (
@@ -33,7 +111,7 @@ export default function App() {
         <div className="sheet-handle" aria-hidden="true"><span /></div>
 
         {selectedApartment ? (
-          <ApartmentDetail apartment={selectedApartment} onClose={() => setSelectedSlug(undefined)} />
+          <ApartmentDetail apartment={selectedApartment} onClose={closeApartment} />
         ) : (
           <div className="shortlist-view">
             <header className="site-header">

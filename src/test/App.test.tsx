@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import type { Apartment } from '../data/types'
@@ -66,6 +66,7 @@ function apartmentFixture(rank: number, name: string): Apartment {
 }
 
 beforeEach(() => {
+  window.history.replaceState({}, '', '/')
   apartmentRecords.splice(
     0,
     apartmentRecords.length,
@@ -98,11 +99,12 @@ describe('App', () => {
     expect(panel.queryByRole('button', { name: 'Foxtrot Home 상세 보기' })).not.toBeInTheDocument()
   })
 
-  it('opens a card detail, exposes the Dropbox link, and returns to Top 5', () => {
+  it('opens a card detail, exposes the Dropbox link, and returns to Top 5', async () => {
     render(<App />)
 
     fireEvent.click(screen.getByRole('button', { name: 'Alpha Home 상세 보기' }))
 
+    expect(window.location.search).toBe('?apartment=alpha-home')
     expect(screen.getByRole('heading', { name: 'Alpha Home' })).toBeInTheDocument()
     expect(screen.getByLabelText('월 예상 비용')).toHaveTextContent('$3,851')
     expect(screen.getByRole('link', { name: /Dropbox에서 사진과 영상 전체 폴더 열기/ })).toHaveAttribute(
@@ -117,7 +119,70 @@ describe('App', () => {
 
     fireEvent.click(screen.getByRole('button', { name: '상세 닫기' }))
 
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: 'Top 5 Candidates' })).toBeInTheDocument()
+    })
+    expect(window.location.search).toBe('')
+  })
+
+  it('uses browser Back and Forward to move between Top 5 and apartment detail', async () => {
+    render(<App />)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Alpha Home 상세 보기' }))
+    expect(screen.getByRole('heading', { name: 'Alpha Home' })).toBeInTheDocument()
+
+    act(() => window.history.back())
+
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: 'Top 5 Candidates' })).toBeInTheDocument()
+    })
+    expect(window.location.search).toBe('')
+
+    act(() => window.history.forward())
+
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: 'Alpha Home' })).toBeInTheDocument()
+    })
+    expect(window.location.search).toBe('?apartment=alpha-home')
+  })
+
+  it('replaces the open detail when another map pin is selected', async () => {
+    render(<App />)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Alpha Home 상세 보기' }))
+    const detailHistoryLength = window.history.length
+    fireEvent.click(screen.getByRole('button', { name: '지도에서 Alpha Home 선택' }))
+    expect(window.history.length).toBe(detailHistoryLength)
+
+    fireEvent.click(screen.getByRole('button', { name: '지도에서 Bravo Home 선택' }))
+
+    expect(screen.getByRole('heading', { name: 'Bravo Home' })).toBeInTheDocument()
+    expect(window.location.search).toBe('?apartment=bravo-home')
+    expect(window.history.length).toBe(detailHistoryLength)
+
+    act(() => window.history.back())
+
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: 'Top 5 Candidates' })).toBeInTheDocument()
+    })
+
+    act(() => window.history.forward())
+
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: 'Bravo Home' })).toBeInTheDocument()
+    })
+  })
+
+  it('opens a valid apartment URL directly and closes it without leaving the page', () => {
+    window.history.replaceState({}, '', '/?apartment=alpha-home')
+
+    render(<App />)
+
+    expect(screen.getByRole('heading', { name: 'Alpha Home' })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: '상세 닫기' }))
+
     expect(screen.getByRole('heading', { name: 'Top 5 Candidates' })).toBeInTheDocument()
+    expect(window.location.search).toBe('')
   })
 
   it('opens any public candidate selected from the map, including homes outside Top 5', () => {
