@@ -131,14 +131,21 @@ async function syncApartment(
   apartment: ApartmentDraft & { sourceFolder: string },
 ): Promise<number> {
   const sourceDirectory = resolve(config.sourceRoot, apartment.sourceFolder)
-  await access(sourceDirectory)
+  const selectedDirectories = apartment.sourceSubfolders?.map((subfolder) =>
+    resolve(sourceDirectory, subfolder)
+  ) ?? [sourceDirectory]
+  await Promise.all(selectedDirectories.map((directory) => access(directory)))
 
-  const images = await findImages(sourceDirectory)
+  const images = (
+    await Promise.all(selectedDirectories.map((directory) => findImages(directory)))
+  ).flat()
   const outputDirectory = resolve(repositoryRoot, 'public', 'media', apartment.slug)
   await mkdir(outputDirectory, { recursive: true })
 
   const expectedNames = new Set<string>()
   for (const image of images) {
+    // Keep the selected subfolder in the hash input so identically named files
+    // from separate units cannot overwrite each other.
     const id = outputId(image, sourceDirectory)
     const thumbnailName = `${id}-640.webp`
     const fullName = `${id}-1600.webp`
@@ -169,6 +176,15 @@ async function syncApartment(
 }
 
 async function main(): Promise<void> {
+  const arguments_ = process.argv.slice(2)
+  if (
+    arguments_.length !== 0
+    && (arguments_.length !== 2 || arguments_[0] !== '--slug' || !arguments_[1])
+  ) {
+    throw new Error('사용법: npm run sync-media -- [--slug <candidate-slug>]')
+  }
+  const requestedSlug = arguments_[1]
+
   const config = await readConfig()
   await access(config.sourceRoot)
 
@@ -178,7 +194,13 @@ async function main(): Promise<void> {
     throw new Error(`콘텐츠 검증에 실패했습니다.\n- ${issues.join('\n- ')}`)
   }
 
-  const published = loaded.map(({ draft }) => draft).filter((draft) => draft.published)
+  const allPublished = loaded.map(({ draft }) => draft).filter((draft) => draft.published)
+  const published = requestedSlug
+    ? allPublished.filter((draft) => draft.slug === requestedSlug)
+    : allPublished
+  if (requestedSlug && published.length === 0) {
+    throw new Error(`공개 후보에서 slug를 찾을 수 없습니다: ${requestedSlug}`)
+  }
   if (published.length === 0) {
     console.log('Published 후보가 없어 변환할 미디어가 없습니다.')
     return
@@ -188,6 +210,10 @@ async function main(): Promise<void> {
   for (const apartment of published) {
     if (!apartment.sourceFolder) {
       throw new Error(`${apartment.slug}: sourceFolder가 필요합니다.`)
+    }
+    if (apartment.mediaSync === false) {
+      console.log(`${apartment.slug}: mediaSync=false로 사진 동기화 건너뜀`)
+      continue
     }
     const count = await syncApartment(
       config,

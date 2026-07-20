@@ -83,6 +83,7 @@ describe('App', () => {
     render(<App />)
 
     const panel = within(screen.getByLabelText('아파트 후보 정보'))
+    expect(panel.getByText('🇺🇸')).toBeInTheDocument()
     expect(panel.getByRole('heading', { name: 'Top 5 Candidates' })).toBeInTheDocument()
     expect(panel.getByText('5 / 6')).toBeInTheDocument()
 

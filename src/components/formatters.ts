@@ -35,6 +35,9 @@ export function formatDate(value?: string | null) {
 
 export function monthlyTotal(apartment: Apartment) {
   const { rent, recurringFees, parking, utilitiesEstimate } = apartment.costs
+
+  if (typeof rent !== 'number' || !Number.isFinite(rent)) return undefined
+
   return [rent, recurringFees, parking, utilitiesEstimate].reduce<number>(
     (total, value) => total + (typeof value === 'number' ? value : 0),
     0,

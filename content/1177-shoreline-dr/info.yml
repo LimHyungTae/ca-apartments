@@ -1,0 +1,67 @@
+published: true
+slug: 1177-shoreline-dr
+name: 1177 Shoreline Dr
+sourceFolder: 1177 Shoreline Dr
+rank: 2
+status: visited
+
+location:
+  address: 1177 Shoreline Dr, San Mateo, CA 94404
+  area: Mariners Island · Harbortown, San Mateo
+  lat: 37.5565143
+  lng: -122.2892555
+
+visitDate: 2026-07-19
+
+unit:
+  beds: 2
+  baths: 2
+  sqft: 1165
+
+building:
+  propertyType: condo
+  yearBuilt: 1979
+
+parking:
+  type: 집과 바로 연결된 전용 차고
+  notes: 차고에서 집으로 바로 들어갈 수 있어 차로 외출하기 편리함
+
+costs:
+  rent: 4500
+
+commutes: []
+surroundings:
+  - 앞쪽에 발코니와 정원이 있음
+  - 걸어서 이용할 만한 주변 편의시설은 거의 없음
+features:
+  - 부엌과 화장실이 완전히 새로 리모델링됨
+  - 침실에는 동쪽 방향 창이 있음
+  - 거실은 북서향
+  - 차고와 집이 내부로 바로 연결됨
+pros:
+  - 1,165 sqft로 가족이 지내기에 적절한 크기
+  - 부엌과 화장실이 완전히 새것이라 내부 상태가 좋음
+  - 앞쪽에 발코니와 정원이 있음
+  - 차고와 집이 바로 연결되어 외출하기 편리함
+cons:
+  - 침실에는 동향 창이 있지만 거실이 북서향이라 다소 어두움
+  - 주변에 걸어서 이용할 만한 편의시설이 거의 없음
+notes: |
+  집주인이 직접 거주하려고 부엌과 화장실을 새로 고쳤으나, 원래 살던 집이 팔리지 않아 임대로 내놓았다고 설명함.
+  주변 편의시설은 부족하지만 차고와 집이 바로 연결되어 차를 타고 이동하기에는 다른 후보보다 편해 보임.
+  직접 촬영한 사진은 사이트 갤러리에서, 사진과 영상 전체는 Dropbox 폴더에서 확인할 수 있음.
+
+scores:
+  location:
+  value:
+  unit:
+  amenities:
+  commute:
+  overall:
+
+links:
+  official:
+  listing: https://www.zillow.com/homedetails/1177-Shoreline-Dr-San-Mateo-CA-94404/15630781_zpid/
+  dropboxFolder: https://www.dropbox.com/scl/fo/ogkmaz4ijedasz1wb52oy/ABFKnm-qf5KBZeQnrqWbcq0?rlkey=tb3ns6ivn6layt0rv923j092h&dl=0
+
+lastVerified: 2026-07-19

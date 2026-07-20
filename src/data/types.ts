@@ -103,6 +103,8 @@ export interface ApartmentDraft {
   slug: string
   name?: string
   sourceFolder?: string
+  sourceSubfolders?: string[]
+  mediaSync?: boolean
   rank?: number
   status?: ApartmentStatus
   location?: ApartmentLocationDraft
@@ -150,7 +152,7 @@ export interface Apartment {
   access?: ApartmentAccess
   lease?: ApartmentLease
   parking?: ApartmentParking
-  costs: ApartmentCosts & { rent: number }
+  costs: ApartmentCosts
   commutes?: ApartmentCommute[]
   amenities?: string[]
   surroundings?: string[]

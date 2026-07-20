@@ -75,7 +75,7 @@ describe('apartment helpers', () => {
     expect(() => getTopApartments(source, -1)).toThrow(RangeError)
   })
 
-  it('publishes the correct Dropbox folder for every Top 5 candidate', () => {
+  it('keeps the requested Top 5 order and available Dropbox folders', () => {
     expect(
       getTopApartments(apartments).map((apartment) => [
         apartment.rank,
@@ -83,10 +83,10 @@ describe('apartment helpers', () => {
         apartment.links?.dropboxFolder,
       ]),
     ).toEqual([
-      [1, 'park-place-at-san-mateo', 'https://www.dropbox.com/scl/fo/p8qz6rdiraxuhqiz4tzhc/AG4_VcnZcftmMA-rEcgeXsM?rlkey=xjcsiero22cvmitl6hgptryqo&dl=0'],
-      [2, '1107-palm-ave-b', 'https://www.dropbox.com/scl/fo/pyzxzptfotl1gzp7lyrhq/ADlKxMvPCuCpNO8Da13cHrs?rlkey=5teo5jiy5ke21v8jjhpyjodae&dl=0'],
-      [3, 'the-plaza', 'https://www.dropbox.com/scl/fo/lb0wk734yz5esnctdgvj9/AAjL2niO3TJN5WtlJvmeEt4?rlkey=6very1qho9dnlfcxe7h0w3zdi&dl=0'],
-      [4, 'one-hundred-grand', 'https://www.dropbox.com/scl/fo/vza4nvtol08kar1yo9190/AObYGyktYJP-L3lWPtW06Bg?rlkey=hme2brbiynvswpjb1cdm3dw0o&dl=0'],
+      [1, 'fosters-landing', 'https://www.dropbox.com/scl/fo/rd6tqht1cgfj4p0huxx7o/ADoEAGNyA394ar6FVZxSst8?rlkey=q78rrwwrcz7qu9xq1nme9xcs9&dl=0'],
+      [2, '1177-shoreline-dr', 'https://www.dropbox.com/scl/fo/ogkmaz4ijedasz1wb52oy/ABFKnm-qf5KBZeQnrqWbcq0?rlkey=tb3ns6ivn6layt0rv923j092h&dl=0'],
+      [3, '1107-palm-ave-b', 'https://www.dropbox.com/scl/fo/pyzxzptfotl1gzp7lyrhq/ADlKxMvPCuCpNO8Da13cHrs?rlkey=5teo5jiy5ke21v8jjhpyjodae&dl=0'],
+      [4, 'the-plaza', 'https://www.dropbox.com/scl/fo/lb0wk734yz5esnctdgvj9/AAjL2niO3TJN5WtlJvmeEt4?rlkey=6very1qho9dnlfcxe7h0w3zdi&dl=0'],
       [5, '46-barneson-ave-apt-1', 'https://www.dropbox.com/scl/fo/0r23zrk7r21d218i173x3/AEOMo7KUegmu8G1JJ00waVw?rlkey=ry4qba3u145ndo2y2232h70ig&dl=0'],
     ])
   })
@@ -145,6 +145,33 @@ describe('content validation', () => {
     expect(draft.access?.entryStairs).toBe(true)
     expect(draft.surroundings).toEqual(['Quiet street', 'Five minutes to groceries'])
     expect(draft.features).toEqual(['South-facing living room', 'In-unit laundry'])
+  })
+
+  it('accepts safe, distinct media subfolders and an intentional photo placeholder', () => {
+    const draft = parseApartmentDraft({
+      published: false,
+      slug: 'media-home',
+      sourceFolder: 'Media Home',
+      sourceSubfolders: ['2818', ' 6808 '],
+      mediaSync: false,
+    })
+
+    expect(draft.sourceSubfolders).toEqual(['2818', '6808'])
+    expect(draft.mediaSync).toBe(false)
+    expect(() =>
+      parseApartmentDraft({
+        published: false,
+        slug: 'unsafe-media-home',
+        sourceSubfolders: ['../other-home'],
+      }),
+    ).toThrow(/한 단계 폴더/)
+    expect(() =>
+      parseApartmentDraft({
+        published: false,
+        slug: 'duplicate-media-home',
+        sourceSubfolders: ['2818', ' 2818 '],
+      }),
+    ).toThrow(/중복/)
   })
 
   it.each([
@@ -215,6 +242,8 @@ describe('content validation', () => {
 
     expect(issues).toContain('rank 1 중복: alpha-home, bravo-home')
     expect(issues).toContain('slug 중복: alpha-home')
-    expect(issues.find((issue) => issue.startsWith('incomplete-home:'))).toContain('costs.rent')
+    const incompleteIssue = issues.find((issue) => issue.startsWith('incomplete-home:'))
+    expect(incompleteIssue).toContain('location.lng')
+    expect(incompleteIssue).not.toContain('costs.rent')
   })
 })

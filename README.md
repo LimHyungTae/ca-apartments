@@ -30,6 +30,10 @@ published: false
 slug: example-apartments
 name: Example Apartments
 sourceFolder: Example Apartments
+sourceSubfolders: # 선택: 동기화할 한 단계 하위 사진 폴더들
+  - "2818"
+  - "6808"
+mediaSync: true # false면 사진 파일이 있어도 placeholder 유지
 rank: 1
 status: visited # considering | scheduled | visited | rejected
 location:
@@ -106,7 +110,6 @@ Draft는 빈 값을 허용하므로 정보를 모으는 동안 `published: false
 
 - `name`, `sourceFolder`, 양의 정수 `rank`, `status`
 - `location.address`, `location.lat`, `location.lng`
-- `costs.rent`
 
 공개 후보끼리는 `rank`가 겹칠 수 없고 모든 후보의 `slug`는 고유해야 합니다. Top 5는 `rank`가 작은 순서대로 결정됩니다. 월 예상 총비용은 렌트, 반복 비용, 주차비, 예상 공과금의 합이며 보증금과 프로모션은 별도로 표시됩니다.
 
@@ -117,7 +120,7 @@ Draft는 빈 값을 허용하므로 정보를 모으는 동안 `published: false
 - `building.propertyType`은 `apartment`, `condo`, `townhouse`, `house`, `other` 중 하나입니다.
 - `access`의 계단·엘리베이터·무단차 진입 여부는 YAML 불리언인 `true` 또는 `false`로 적습니다.
 - `surroundings`에는 동네와 생활권, `features`에는 유닛이나 건물의 특징을 목록으로 적습니다.
-- 가격 필드에는 `$`나 쉼표 없이 숫자만 입력합니다.
+- 가격 필드에는 `$`나 쉼표 없이 숫자만 입력합니다. 아직 정확한 렌트를 확인하지 못했다면 `costs.rent`를 비워둘 수 있으며, 사이트에는 `미정`으로 표시됩니다.
 
 `lease`에는 계약 기간과 계약 메모를, `parking`에는 주차 형태·가능 대수·주차 메모를 적습니다. 매월 내는 주차 요금은 별도의 `costs.parking`에 숫자로 입력합니다. 실제 정보나 좌표를 확인하기 전에는 추측해서 채우지 말고 `published: false` 상태로 두세요.
 
@@ -125,14 +128,18 @@ Draft는 빈 값을 허용하므로 정보를 모으는 동안 `published: false
 
 ## Dropbox 사진과 영상
 
-원본 폴더 구조는 다음과 같이 유지합니다. `sourceFolder`에는 `sourceRoot` 바로 아래 폴더 이름을 정확히 적습니다.
+원본 폴더 구조는 다음과 같이 유지합니다. `sourceFolder`에는 `sourceRoot` 바로 아래 폴더 이름을 정확히 적습니다. 같은 단지의 유닛별 사진을 하위 폴더로 나눴다면 `sourceSubfolders`에 사이트에 공개할 폴더 이름만 나열합니다. 이 목록을 생략하면 `sourceFolder` 아래의 모든 사진을 재귀적으로 동기화합니다.
 
 ```text
 Dropbox/CA-Apartments/
 └── Example Apartments/
-    ├── living-room.jpg
-    ├── kitchen.heic
-    └── walkthrough.mp4
+    ├── 0709/                  # sourceSubfolders에 없으므로 제외
+    │   └── previous-unit.jpg
+    ├── 2818/
+    │   ├── living-room.jpg
+    │   └── walkthrough.mp4
+    └── 6808/
+        └── kitchen.heic
 ```
 
 먼저 로컬 전용 설정 파일을 만듭니다.
@@ -145,10 +152,11 @@ cp media.config.example.json media.config.local.json
 
 ```bash
 npm run sync-media
+npm run sync-media -- --slug example-apartments # 후보 하나만 동기화
 npm run generate
 ```
 
-동기화 명령은 `published: true`인 후보만 처리합니다. JPG, PNG, HEIC, TIFF, AVIF, WebP 등의 사진을 EXIF 방향에 맞게 자동 회전하고 메타데이터를 제거한 뒤 최대 폭 640px/1600px WebP 두 장으로 만듭니다. 결과는 `public/media/<slug>/`에 저장되고, 원본에서 사라진 사진의 기존 WebP도 정리됩니다. 영상과 원본 사진은 복사하거나 GitHub에 올리지 않습니다.
+동기화 명령은 `published: true`이고 `mediaSync`가 `false`가 아닌 후보만 처리합니다. `sourceSubfolders`가 있으면 선택한 하위 폴더만 처리하며, 서로 다른 유닛에 같은 파일명이 있어도 각각 별도 사진으로 저장합니다. JPG, PNG, HEIC, TIFF, AVIF, WebP 등의 사진을 EXIF 방향에 맞게 자동 회전하고 메타데이터를 제거한 뒤 최대 폭 640px/1600px WebP 두 장으로 만듭니다. 결과는 `public/media/<slug>/`에 저장되고, 선택 대상에서 빠지거나 원본에서 사라진 사진의 기존 WebP도 정리됩니다. 영상과 원본 사진은 복사하거나 GitHub에 올리지 않습니다. 사진을 아직 공개하지 않으려면 `mediaSync: false`로 두면 상세 화면에 placeholder가 표시됩니다.
 
 Dropbox에서는 아파트별 폴더에 **보기 전용 링크**를 만든 뒤 `links.dropboxFolder`에 넣으세요. 상세 화면 상단의 “사진 · 영상 전체 폴더 보기” 버튼으로 원본 사진과 영상을 확인할 수 있습니다. 링크 권한은 Dropbox에서 직접 확인해야 합니다.
 

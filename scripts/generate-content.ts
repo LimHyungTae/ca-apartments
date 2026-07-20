@@ -146,7 +146,6 @@ function assertPublishedFields(draft: ApartmentDraft): asserts draft is Apartmen
     lat: number
     lng: number
   }
-  costs: NonNullable<ApartmentDraft['costs']> & { rent: number }
 } {
   const issues = validateApartmentCollection([draft])
   if (issues.length > 0) throw new Error(issues.join('\n'))
@@ -166,7 +165,12 @@ export async function buildPublishedApartments(
     if (!draft.published) continue
     assertPublishedFields(draft)
 
-    const { sourceFolder: _sourceFolder, ...publicDraft } = draft
+    const {
+      sourceFolder: _sourceFolder,
+      sourceSubfolders: _sourceSubfolders,
+      mediaSync: _mediaSync,
+      ...publicDraft
+    } = draft
     apartments.push({
       ...publicDraft,
       published: true,
@@ -174,8 +178,12 @@ export async function buildPublishedApartments(
       rank: draft.rank,
       status: draft.status,
       location: draft.location,
-      costs: draft.costs,
-      media: { images: await discoverImages(repositoryRoot, draft) },
+      costs: draft.costs ?? {},
+      media: {
+        images: draft.mediaSync === false
+          ? []
+          : await discoverImages(repositoryRoot, draft),
+      },
     })
   }
 

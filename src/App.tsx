@@ -38,7 +38,7 @@ export default function App() {
           <div className="shortlist-view">
             <header className="site-header">
               <div className="brand-row">
-                <div className="brand-mark" aria-hidden="true">CA</div>
+                <div className="brand-mark" aria-hidden="true">🇺🇸</div>
                 <div>
                   <p>BAY AREA · HOME SEARCH</p>
                   <h1>우리 집 후보</h1>

@@ -141,6 +141,29 @@ export const apartmentDraftSchema = z
         'Dropbox 루트 바로 아래의 폴더 이름만 입력하세요.',
       )
       .optional(),
+    sourceSubfolders: z
+      .array(
+        z
+          .string()
+          .trim()
+          .min(1)
+          .refine(
+            (value) =>
+              !value.includes('/') &&
+              !value.includes('\\') &&
+              !value.includes('\0') &&
+              value !== '.' &&
+              value !== '..',
+            'sourceFolder 바로 아래의 한 단계 폴더 이름만 입력하세요.',
+          ),
+      )
+      .min(1, '사진 하위 폴더를 하나 이상 입력하세요.')
+      .refine(
+        (values) => new Set(values).size === values.length,
+        '사진 하위 폴더 이름은 중복될 수 없습니다.',
+      )
+      .optional(),
+    mediaSync: z.boolean().optional(),
     rank: z.number().int().positive().optional(),
     status: z.enum(apartmentStatuses).optional(),
     location: locationSchema.optional(),
@@ -220,8 +243,6 @@ export function validateApartmentCollection(drafts: ApartmentDraft[]): string[] 
     if (!draft.location?.address) missing.push('location.address')
     if (draft.location?.lat === undefined) missing.push('location.lat')
     if (draft.location?.lng === undefined) missing.push('location.lng')
-    if (draft.costs?.rent === undefined) missing.push('costs.rent')
-
     if (missing.length > 0) {
       issues.push(`${draft.slug}: published 후보의 필수 필드 누락: ${missing.join(', ')}`)
     }

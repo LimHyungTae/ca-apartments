@@ -60,6 +60,7 @@ describe('display formatters', () => {
         }),
       ),
     ).toBe(3_675)
+    expect(monthlyTotal(apartmentFixture({ costs: {} }))).toBeUndefined()
   })
 
   it('builds readable unit and status labels with safe fallbacks', () => {
