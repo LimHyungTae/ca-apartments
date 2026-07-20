@@ -32,7 +32,7 @@ name: Example Apartments
 sourceFolder: Example Apartments
 sourceSubfolders: # 선택: 동기화할 한 단계 하위 사진 폴더들
   - "2818"
-  - "6808"
+  - "2820"
 mediaSync: true # false면 사진 파일이 있어도 placeholder 유지
 rank: 1
 status: visited # considering | scheduled | visited | rejected
@@ -138,7 +138,7 @@ Dropbox/CA-Apartments/
     ├── 2818/
     │   ├── living-room.jpg
     │   └── walkthrough.mp4
-    └── 6808/
+    └── 2820/
         └── kitchen.heic
 ```
 

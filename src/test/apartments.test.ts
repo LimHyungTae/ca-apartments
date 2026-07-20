@@ -152,11 +152,11 @@ describe('content validation', () => {
       published: false,
       slug: 'media-home',
       sourceFolder: 'Media Home',
-      sourceSubfolders: ['2818', ' 6808 '],
+      sourceSubfolders: ['2818', ' 2820 '],
       mediaSync: false,
     })
 
-    expect(draft.sourceSubfolders).toEqual(['2818', '6808'])
+    expect(draft.sourceSubfolders).toEqual(['2818', '2820'])
     expect(draft.mediaSync).toBe(false)
     expect(() =>
       parseApartmentDraft({
